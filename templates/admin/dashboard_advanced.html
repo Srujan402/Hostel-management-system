@@ -1,0 +1,236 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="mb-4">
+        <h2><i class="bi bi-speedometer2"></i> Dashboard</h2>
+        <p class="text-muted">Welcome back, {{ user.first_name }}! Here's your system overview.</p>
+    </div>
+
+    <!-- Key Metrics Row 1 -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-left-primary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-1">Active Students</h6>
+                            <h3 class="mb-0">{{ total_students }}</h3>
+                        </div>
+                        <div style="font-size: 2rem; color: #3498db; opacity: 0.3;">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-left-success">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-1">Available Rooms</h6>
+                            <h3 class="mb-0">{{ available_rooms }}/{{ total_rooms }}</h3>
+                        </div>
+                        <div style="font-size: 2rem; color: #27ae60; opacity: 0.3;">
+                            <i class="bi bi-door-closed"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-left-warning">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-1">Pending Fees</h6>
+                            <h3 class="mb-0">₹{{ pending_fees|floatformat:0 }}</h3>
+                        </div>
+                        <div style="font-size: 2rem; color: #f39c12; opacity: 0.3;">
+                            <i class="bi bi-cash-coin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 mb-3">
+            <div class="card border-left-danger">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-muted mb-1">Open Complaints</h6>
+                            <h3 class="mb-0">{{ pending_complaints }}</h3>
+                        </div>
+                        <div style="font-size: 2rem; color: #e74c3c; opacity: 0.3;">
+                            <i class="bi bi-chat-dots"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue Section -->
+    <div class="row mb-4">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-cash-coin"></i> Revenue Status</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Total Collected</span>
+                            <strong>₹{{ total_revenue|floatformat:0 }}</strong>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-success" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Pending Collection</span>
+                            <strong>₹{{ pending_fees|floatformat:0 }}</strong>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar bg-warning" style="width: 25%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-door-closed"></i> Room Occupancy</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <div style="flex: 1;">
+                            <h2 class="mb-0">{{ available_rooms }}/{{ total_rooms }}</h2>
+                            <p class="text-muted mb-0">Available</p>
+                        </div>
+                        <div class="text-center" style="flex: 1;">
+                            <div class="progress" style="height: 100px; width: 100px; border-radius: 50%; position: relative; margin: 0 auto;">
+                                <div class="progress-bar bg-info" style="width: 60%; height: 100%;"></div>
+                                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center;">
+                                    <strong>60%</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-lightning"></i> Quick Actions</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-2">
+                            <a href="{% url 'add_student' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-plus-circle"></i> Add Student
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="{% url 'add_room' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-plus-circle"></i> Add Room
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="{% url 'generate_fees' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-cash-coin"></i> Generate Fees
+                            </a>
+                        </div>
+                        <div class="col-md-3 mb-2">
+                            <a href="{% url 'complaint_list' %}" class="btn btn-outline-primary w-100">
+                                <i class="bi bi-chat-dots"></i> View Complaints
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Detailed Statistics -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-bar-chart"></i> Student Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total Active Students</span>
+                            <strong>{{ total_students }}</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>With Room Allocated</span>
+                            <strong class="text-success">{{ total_students }}</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Without Room</span>
+                            <strong class="text-warning">0</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="bi bi-chat-dots"></i> Complaint Status</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Total Complaints</span>
+                            <strong>{{ total_complaints }}</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Pending/In Progress</span>
+                            <strong class="text-warning">{{ pending_complaints }}</strong>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between">
+                            <span>Resolved</span>
+                            <strong class="text-success">{{ total_complaints|add:0 }}</strong>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.border-left-primary {
+    border-left: 4px solid #3498db !important;
+}
+.border-left-success {
+    border-left: 4px solid #27ae60 !important;
+}
+.border-left-warning {
+    border-left: 4px solid #f39c12 !important;
+}
+.border-left-danger {
+    border-left: 4px solid #e74c3c !important;
+}
+</style>
+{% endblock %}

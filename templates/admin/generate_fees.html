@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Generate Fees - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2><i class="bi bi-cash-coin"></i> Generate Monthly Fees</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                       <div class="mb-3">
+    <label for="month" class="form-label">Month</label>
+    <select class="form-select" id="month" name="month" required>
+        <option value="">Select Month</option>
+        <option value="January">January</option>
+        <option value="February">February</option>
+        <option value="March">March</option>
+        <option value="April">April</option>
+        <option value="May">May</option>
+        <option value="June">June</option>
+        <option value="July">July</option>
+        <option value="August">August</option>
+        <option value="September">September</option>
+        <option value="October">October</option>
+        <option value="November">November</option>
+        <option value="December">December</option>
+    </select>
+</div>
+
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i> Fees will be generated for all active students with allocated rooms.
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Generate Fees
+                            </button>
+                            <a href="{% url 'fee_list' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

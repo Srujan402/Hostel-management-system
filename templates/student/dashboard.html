@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2><i class="bi bi-speedometer2"></i> Student Dashboard</h2>
+        <p class="text-muted">Welcome, {{ user.first_name }}!</p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <i class="bi bi-door-closed" style="font-size: 2rem; color: #3498db;"></i>
+                {% if student.room %}
+                    <h3>{{ student.room.room_number }}</h3>
+                    <p>Your Room</p>
+                {% else %}
+                    <h3>-</h3>
+                    <p>Room Not Allocated</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <i class="bi bi-cash-coin" style="font-size: 2rem; color: #e74c3c;"></i>
+                <h3>₹{{ pending_fees }}</h3>
+                <p>Pending Fees</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <i class="bi bi-check-circle" style="font-size: 2rem; color: #27ae60;"></i>
+                <h3>₹{{ paid_fees }}</h3>
+                <p>Paid Fees</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <i class="bi bi-chat-dots" style="font-size: 2rem; color: #f39c12;"></i>
+                <h3>{{ pending_complaints }}</h3>
+                <p>Open Complaints</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Student Information -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-person"></i> Personal Information
+                </div>
+                <div class="card-body">
+                    <p><strong>Roll Number:</strong> {{ student.roll_number }}</p>
+                    <p><strong>Name:</strong> {{ student.user.first_name }} {{ student.user.last_name }}</p>
+                    <p><strong>Email:</strong> {{ student.user.email }}</p>
+                    <p><strong>Phone:</strong> {{ student.phone }}</p>
+                    <p><strong>Date of Birth:</strong> {{ student.date_of_birth }}</p>
+                    <a href="{% url 'student_profile' %}" class="btn btn-sm btn-primary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-door-closed"></i> Room Information
+                </div>
+                <div class="card-body">
+                    {% if student.room %}
+                        <p><strong>Room Number:</strong> {{ student.room.room_number }}</p>
+                        <p><strong>Floor:</strong> {{ student.room.floor }}</p>
+                        <p><strong>Capacity:</strong> {{ student.room.capacity }} beds</p>
+                        <p><strong>Monthly Rent:</strong> ₹{{ student.room.rent }}</p>
+                    {% else %}
+                        <p class="text-muted">No room allocated yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-lightning"></i> Quick Actions
+                </div>
+                <div class="card-body">
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'my_fees' %}" class="btn btn-primary">
+                            <i class="bi bi-cash-coin"></i> View Fees
+                        </a>
+                        <a href="{% url 'my_complaints' %}" class="btn btn-primary">
+                            <i class="bi bi-chat-dots"></i> Complaints
+                        </a>
+                        <a href="{% url 'submit_complaint' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Submit Complaint
+                        </a>
+                        <a href="{% url 'my_visitors' %}" class="btn btn-primary">
+                            <i class="bi bi-person-plus"></i> Visitors
+                        </a>
+                        <a href="{% url 'request_visitor' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Request Visitor
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

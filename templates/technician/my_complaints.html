@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}My Complaints - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2><i class="bi bi-chat-dots"></i> Assigned Complaints</h2>
+        <p class="text-muted">Manage your assigned complaints</p>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {% if complaints %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Student</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Submitted Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaint in complaints %}
+                        <tr>
+                            <td><strong>{{ complaint.title }}</strong></td>
+                            <td>{{ complaint.student.user.first_name }} {{ complaint.student.user.last_name }}</td>
+                            <td><span class="badge bg-info">{{ complaint.get_priority_display }}</span></td>
+                            <td>
+                                {% if complaint.status == 'resolved' %}
+                                    <span class="badge bg-success">Resolved</span>
+                                {% elif complaint.status == 'in_progress' %}
+                                    <span class="badge bg-warning">In Progress</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">{{ complaint.get_status_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ complaint.submitted_date|date:"Y-m-d" }}</td>
+                            <td>
+                                <a href="{% url 'update_complaint' complaint.pk %}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-pencil"></i> Update
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> No complaints assigned to you.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

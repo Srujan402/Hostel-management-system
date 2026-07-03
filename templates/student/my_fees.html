@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}My Fees - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2><i class="bi bi-cash-coin"></i> My Fees</h2>
+        <p class="text-muted">View and manage your fee records</p>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {% if fees %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Amount Due</th>
+                            <th>Amount Paid</th>
+                            <th>Remaining</th>
+                            <th>Due Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fee in fees %}
+                        <tr>
+                            <td><strong>{{ fee.month }}</strong></td>
+                            <td>₹{{ fee.amount }}</td>
+                            <td>₹{{ fee.amount_paid }}</td>
+                            <td>₹{{ fee.remaining_amount }}</td>
+                            <td>{{ fee.due_date }}</td>
+                            <td>
+                                {% if fee.status == 'paid' %}
+                                    <span class="badge bg-success">Paid</span>
+                                {% elif fee.status == 'pending' %}
+                                    <span class="badge bg-warning">Pending</span>
+                                {% elif fee.status == 'overdue' %}
+                                    <span class="badge bg-danger">Overdue</span>
+                                {% elif fee.status == 'partially_paid' %}
+                                    <span class="badge bg-info">Partially Paid</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> No fees found.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

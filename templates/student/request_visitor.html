@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}Request Visitor - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2><i class="bi bi-person-plus"></i> Request Visitor Entry</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="visitor_name" class="form-label">Visitor Name</label>
+                                    <input type="text" class="form-control" id="visitor_name" name="visitor_name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone</label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="relationship" class="form-label">Relationship</label>
+                                    <input type="text" class="form-control" id="relationship" name="relationship" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="id_proof_type" class="form-label">ID Proof Type</label>
+                                    <input type="text" class="form-control" id="id_proof_type" name="id_proof_type" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="id_proof_number" class="form-label">ID Proof Number</label>
+                            <input type="text" class="form-control" id="id_proof_number" name="id_proof_number" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="purpose" class="form-label">Purpose of Visit</label>
+                            <input type="text" class="form-control" id="purpose" name="purpose" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="check_in_date" class="form-label">Check-in Date & Time</label>
+                            <input type="datetime-local" class="form-control" id="check_in_date" name="check_in_date" required>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Submit Request
+                            </button>
+                            <a href="{% url 'my_visitors' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

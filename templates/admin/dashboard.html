@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block title %}Admin Dashboard - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2><i class="bi bi-speedometer2"></i> Dashboard</h2>
+        <p class="text-muted">Welcome back, {{ user.first_name }}!</p>
+    </div>
+
+    <!-- Statistics Cards -->
+    <div class="row">
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <i class="bi bi-person-badge" style="font-size: 2rem; color: #3498db;"></i>
+                <h3>{{ total_students }}</h3>
+                <p>Active Students</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <i class="bi bi-door-closed" style="font-size: 2rem; color: #27ae60;"></i>
+                <h3>{{ total_rooms }}</h3>
+                <p>Total Rooms</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <i class="bi bi-check-circle" style="font-size: 2rem; color: #f39c12;"></i>
+                <h3>{{ available_rooms }}</h3>
+                <p>Available Rooms</p>
+            </div>
+        </div>
+
+        <div class="col-md-3 col-sm-6">
+            <div class="stat-card">
+                <i class="bi bi-chat-dots" style="font-size: 2rem; color: #e74c3c;"></i>
+                <h3>{{ pending_complaints }}</h3>
+                <p>Pending Complaints</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Finance Cards -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-cash-coin"></i> Revenue Information
+                </div>
+                <div class="card-body">
+                    <p class="mb-3">
+                        <strong>Total Revenue:</strong>
+                        <span class="badge bg-success">₹{{ total_revenue }}</span>
+                    </p>
+                    <p>
+                        <strong>Pending Fees:</strong>
+                        <span class="badge bg-warning">₹{{ pending_fees }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-chat-dots"></i> Complaint Status
+                </div>
+                <div class="card-body">
+                    <p class="mb-3">
+                        <strong>Total Complaints:</strong>
+                        <span class="badge bg-info">{{ total_complaints }}</span>
+                    </p>
+                    <p>
+                        <strong>Pending/In Progress:</strong>
+                        <span class="badge bg-warning">{{ pending_complaints }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-lightning"></i> Quick Actions
+                </div>
+                <div class="card-body">
+                    <div class="btn-group" role="group">
+                        <a href="{% url 'add_student' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Add Student
+                        </a>
+                        <a href="{% url 'add_room' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Add Room
+                        </a>
+                        <a href="{% url 'generate_fees' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Generate Fees
+                        </a>
+                        <a href="{% url 'complaint_list' %}" class="btn btn-primary">
+                            <i class="bi bi-chat-dots"></i> View Complaints
+                        </a>
+                        <a href="{% url 'reports' %}" class="btn btn-primary">
+                            <i class="bi bi-file-earmark-pdf"></i> Reports
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

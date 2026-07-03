@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block title %}My Complaints - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4 d-flex justify-content-between align-items-center">
+        <div>
+            <h2><i class="bi bi-chat-dots"></i> My Complaints</h2>
+            <p class="text-muted">View and manage your complaints</p>
+        </div>
+        <a href="{% url 'submit_complaint' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Submit New Complaint
+        </a>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            {% if complaints %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Priority</th>
+                            <th>Status</th>
+                            <th>Submitted Date</th>
+                            <th>Resolved Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for complaint in complaints %}
+                        <tr>
+                            <td><strong>{{ complaint.title }}</strong></td>
+                            <td>
+                                {% if complaint.priority == 'urgent' %}
+                                    <span class="badge bg-danger">{{ complaint.get_priority_display }}</span>
+                                {% elif complaint.priority == 'high' %}
+                                    <span class="badge bg-warning">{{ complaint.get_priority_display }}</span>
+                                {% else %}
+                                    <span class="badge bg-info">{{ complaint.get_priority_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if complaint.status == 'resolved' %}
+                                    <span class="badge bg-success">{{ complaint.get_status_display }}</span>
+                                {% elif complaint.status == 'in_progress' %}
+                                    <span class="badge bg-info">{{ complaint.get_status_display }}</span>
+                                {% else %}
+                                    <span class="badge bg-warning">{{ complaint.get_status_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ complaint.submitted_date|date:"Y-m-d H:i" }}</td>
+                            <td>
+                                {% if complaint.resolved_date %}
+                                    {{ complaint.resolved_date|date:"Y-m-d H:i" }}
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> No complaints found.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

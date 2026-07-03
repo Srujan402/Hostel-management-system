@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Financial Report{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+
+    <h2 class="mb-4">Financial Report</h2>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-body">
+                    <h5>Total Fees Records</h5>
+                    <h3>{{ total_fees }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5>Total Collected</h5>
+                    <h3>₹{{ total_collected }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-body">
+                    <h5>Total Pending</h5>
+                    <h3>₹{{ total_pending }}</h3>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

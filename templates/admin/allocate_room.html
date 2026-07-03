@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Allocate Room - Hostel Management System{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-4">
+        <h2><i class="bi bi-person-plus"></i> Allocate Room {{ room.room_number }}</h2>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <p><strong>Room Details:</strong></p>
+                            <p>Room Number: {{ room.room_number }}</p>
+                            <p>Floor: {{ room.floor }}</p>
+                            <p>Capacity: {{ room.capacity }} beds</p>
+                            <p>Occupied: {{ room.occupied_beds }} beds</p>
+                            <p>Available: {{ room.available_beds }} beds</p>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="student" class="form-label">Select Student</label>
+                            <select class="form-select" id="student" name="student" required>
+                                <option value="">Choose a student...</option>
+                                {% for student in students %}
+                                <option value="{{ student.pk }}">{{ student.user.first_name }} {{ student.user.last_name }} ({{ student.roll_number }})</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mt-4">
+                            <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle"></i> Allocate
+                            </button>
+                            <a href="{% url 'room_list' %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
